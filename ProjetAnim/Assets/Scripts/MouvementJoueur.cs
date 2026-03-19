@@ -50,7 +50,7 @@ public class MouvementJoueur : MonoBehaviour
             vitesse *= vitesseSprint;
         }
 
-        float animationSpeed = vitesse > vitesseBase ? 2.5f : 1.5f;
+        float animationSpeed = vitesse > vitesseBase ? 3f : 1.5f;
         _controller.SetFloat("WalkSpeed", animationSpeed);
 
         // Dirige la vitesse selon axe local
