@@ -18,13 +18,12 @@ public class Patrouilleur : MonoBehaviour
     {
         random = new System.Random();
         _animator = gameObject.GetComponent<Animator>();
-        _animator.SetBool("Walk", true);
         navPatrouilleur = gameObject.GetComponent<NavMeshAgent>();
     }
 
     void Update()
     {
-        Debug.Log("Walk" + _animator.GetBool("Walk"));
+        // Debug.Log("Walk" + _animator.GetBool("Walk"));
 
         if (!enPatrouille)
         {
@@ -36,27 +35,21 @@ public class Patrouilleur : MonoBehaviour
 
     IEnumerator Patrouiller(NavMeshAgent navigateur)
     {
+        _animator.SetBool("Walk", true);
         int index = random.Next(tableauPointsPatrouille.Length);
-        
         Vector3 destination = tableauPointsPatrouille[index].transform.position;
 
         navigateur.SetDestination(destination);
-        yield return new WaitForSeconds(0.03f);
-        if (navigateur.pathPending)
+        while (navigateur.pathPending || navigateur.remainingDistance > navigateur.stoppingDistance)
         {
-            Debug.Log("remaining");
-            while (navigateur.remainingDistance > .5f)
-            {
-                Debug.Log("Dans le premier while");
-                yield return null;
-            }
-            Debug.Log("Sortis du premier while");
+            // Debug.Log("Dans le premier while");
+            yield return null;
         }
+
+        // Debug.Log("Sortis du premier while");
+
         _animator.SetBool("Walk", false);
-
-
         yield return new WaitForSecondsRealtime(PatrouilleDelai);
-
         enPatrouille = false;
     }
 }
