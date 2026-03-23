@@ -378,8 +378,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MouvementJoueur
   vitesseSaut: 5
-  vitesseBase: 5
-  vitesseSprint: 2
 --- !u!1 &1746959863
 GameObject:
   m_ObjectHideFlags: 0
