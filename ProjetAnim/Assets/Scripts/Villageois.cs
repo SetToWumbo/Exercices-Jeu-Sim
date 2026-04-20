@@ -21,8 +21,11 @@ public class Villageois : MonoBehaviour
     private int numeroRessourceChoisie = -1;
     private NavMeshAgent navMeshAgent;
 
+    public IStrategy ressourceStrategy;
+
     private void Start()
     {
+        ressourceStrategy = randomStrategy;
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
@@ -65,7 +68,7 @@ public class Villageois : MonoBehaviour
         }
         else
         {
-            numeroRessourceChoisie = ChoisirRessource(ressources);
+            numeroRessourceChoisie = ressourceStrategy.ChooseResource(this, ressources);
 
             Ressource ressource = ressources[numeroRessourceChoisie];
             navMeshAgent.SetDestination(ressource.transform.position);
@@ -75,12 +78,6 @@ public class Villageois : MonoBehaviour
     public void PickResource(IStrategy pickingStrategy, List<Ressource> ressources)
     {
         int chosenRessourceIndex = pickingStrategy.ChooseResource(this, ressources);
-    }
-
-    // TODO : Cette fonction devrait faire partie d'une des classes de votre patron Strat�gie au lieu de faire partie du villageois
-    private int ChoisirRessource(List<Ressource> ressources)
-    {
-        return Random.Range(0, ressources.Count);
     }
 
     public float GetDistanceTo(Ressource ressource)
