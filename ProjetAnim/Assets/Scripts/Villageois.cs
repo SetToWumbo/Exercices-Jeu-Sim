@@ -21,11 +21,11 @@ public class Villageois : MonoBehaviour
     private int numeroRessourceChoisie = -1;
     private NavMeshAgent navMeshAgent;
 
-    public IStrategy ressourceStrategy;
+    public RessourcePickingStrategy pickingStrategy;
 
     private void Start()
     {
-        ressourceStrategy = randomStrategy;
+        pickingStrategy = RessourcePickingStrategy.Random;
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
@@ -68,16 +68,17 @@ public class Villageois : MonoBehaviour
         }
         else
         {
-            numeroRessourceChoisie = ressourceStrategy.ChooseResource(this, ressources);
+            numeroRessourceChoisie = pickingStrategy.Execute(ressources);
 
             Ressource ressource = ressources[numeroRessourceChoisie];
             navMeshAgent.SetDestination(ressource.transform.position);
         }
     }
 
-    public void PickResource(IStrategy pickingStrategy, List<Ressource> ressources)
+    public void changeStrategy(RessourcePickingStrategy newStrat)
     {
-        int chosenRessourceIndex = pickingStrategy.ChooseResource(this, ressources);
+        pickingStrategy = newStrat;
+        AllerVersProchaineRessource();
     }
 
     public float GetDistanceTo(Ressource ressource)

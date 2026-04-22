@@ -5,10 +5,10 @@ using TMPro;
 
 public class ControleurMenu : MonoBehaviour
 {
-    [SerializeField] 
+    [SerializeField]
     private TMP_InputField saisieVitesse;
 
-    [SerializeField] 
+    [SerializeField]
     private TMP_InputField saisieAcceleration;
 
     public void Start()
@@ -19,11 +19,11 @@ public class ControleurMenu : MonoBehaviour
 
     public void Quitter()
     {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
         EditorApplication.isPlaying = false;
-    #else
+#else
         Application.Quit();
-    #endif
+#endif
     }
 
     public void ChargerJeu()

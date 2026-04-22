@@ -3,20 +3,25 @@ using UnityEngine;
 
 public class BalancedStrategy : IStrategy
 {
-    int chosenIndex = 0;
-    float balancedValue;
 
     public BalancedStrategy() { }
 
-    public int ChooseResource(Villageois villager, List<Ressource> ressources)
+    public int ChooseResource(List<Ressource> ressources)
     {
-        balancedValue = GetBalancedValue(villager, ressources[0]);
+        int chosenIndex = 0;
+
+        Villageois villager = GameObject.FindGameObjectWithTag("Player").GetComponent<Villageois>();
+        float balancedValue = GetBalancedValue(villager, ressources[0]);
+
         for (int i = 1; i < ressources.Count; i++)
         {
             float newValue = GetBalancedValue(villager, ressources[i]);
-            chosenIndex = (newValue > balancedValue) ? i : chosenIndex;
+            if (newValue > balancedValue)
+            {
+                chosenIndex = i;
+                balancedValue = newValue;
+            }
         }
-
         return chosenIndex;
     }
 
